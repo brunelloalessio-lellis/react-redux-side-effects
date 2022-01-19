@@ -21,7 +21,6 @@ const cartSlice = createSlice({
       } else {
         let newItem = action.payload;
 
-        newItem.id = newItem.id;
         newItem.quantity = 1;
         newItem.total = newItem.price;
 

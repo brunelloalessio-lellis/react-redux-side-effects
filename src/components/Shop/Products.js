@@ -12,39 +12,37 @@ const Products = (props) => {
 
   let listContent = <p>No items inside product list</p>;
 
-  useEffect(() => {
-    if (!loadingList && !listLoaded) {
-      dispatch(productsActions.loadingList());
-
-      fetch(
-        "https://react-http-udemy-course-default-rtdb.firebaseio.com/products.json"
-      )
-        .then((response) => {
-          response
-            .json()
-            .then((json) => {
-              let list = [];
-
-              for (const key in json) {
-                if (Object.hasOwnProperty.call(json, key)) {
-                  const element = json[key];
-                  list.push({
-                    id: key,
-                    ...element,
-                  });
-                }
-              }
-              dispatch(productsActions.loadList(list));
-            })
-            .catch(() => {
-              console.error("error loading list");
-            });
-        })
-        .catch(() => {
+  useEffect(()=>{
+    const loadProductList = async () => {
+      if (!loadingList && !listLoaded) {
+        try {
+          dispatch(productsActions.loadingList());
+  
+          const response = await fetch(
+            "https://react-http-udemy-course-default-rtdb.firebaseio.com/products.json"
+          );
+          const json = await response.json();
+  
+          let list = [];
+  
+          for (const key in json) {
+            if (Object.hasOwnProperty.call(json, key)) {
+              const element = json[key];
+              list.push({
+                id: key,
+                ...element,
+              });
+            }
+          }
+          dispatch(productsActions.loadList(list));
+        } catch (e) {
           console.error("error loading list");
-        });
+        }
+      }
     }
-  }, [loadingList, listLoaded]);
+
+    loadProductList()
+  }, [loadingList, listLoaded, dispatch]);
 
   if (loadingList && !listLoaded) {
     listContent = <p>Loading item list ...</p>;
