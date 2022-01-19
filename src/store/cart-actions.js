@@ -67,8 +67,21 @@ export const fetchCartData = () => {
 
     try {
       await loadCartData();
+      dispatch(
+        cartActions.showNotification({
+          status: "success",
+          title: "Success",
+          message: "Cart data loaded successfully!",
+        })
+      );
     } catch (e) {
-      console.error("error loading cart data");
+        dispatch(
+          cartActions.showNotification({
+            status: "error",
+            title: "Error",
+            message: "Error sending cart data!",
+          })
+        );
     }
   };
 };
