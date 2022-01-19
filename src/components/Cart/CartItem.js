@@ -3,7 +3,7 @@ import classes from "./CartItem.module.css";
 import { cartActions } from "../../store/cart";
 
 const CartItem = (props) => {
-  const { title, quantity, total, price } = props.item;
+  const { title, quantity, total, price, id} = props.item;
   const dispatch = useDispatch();
 
   const onPlusClick = () => {
@@ -11,6 +11,7 @@ const CartItem = (props) => {
       cartActions.addItem({
         title,
         price,
+        id,
       })
     );
   };
@@ -20,6 +21,7 @@ const CartItem = (props) => {
       cartActions.removeItem({
         title,
         price,
+        id,
       })
     );
   };

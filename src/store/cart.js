@@ -12,7 +12,7 @@ const cartSlice = createSlice({
     },
     addItem(state, action) {
       let itemFinder = state.items.find(
-        (item) => item.title === action.payload.title
+        (item) => item.id === action.payload.id
       );
 
       if (itemFinder) {
@@ -21,7 +21,7 @@ const cartSlice = createSlice({
       } else {
         let newItem = action.payload;
 
-        newItem.id = new Date().getTime();
+        newItem.id = newItem.id;
         newItem.quantity = 1;
         newItem.total = newItem.price;
 
@@ -30,7 +30,7 @@ const cartSlice = createSlice({
     },
     removeItem(state, action) {
       let itemFinder = state.items.find(
-        (item) => item.title === action.payload.title
+        (item) => item.id === action.payload.id
       );
 
       if (itemFinder) {
@@ -39,7 +39,7 @@ const cartSlice = createSlice({
           itemFinder.total -= itemFinder.price;
         } else {
           state.items = state.items.filter(
-            (item) => item.title !== action.payload.title
+            (item) => item.id !== action.payload.id
           );
         }
       }
