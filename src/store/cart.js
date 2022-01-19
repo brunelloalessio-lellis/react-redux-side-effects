@@ -6,6 +6,8 @@ const cartSlice = createSlice({
     visible: false,
     items: [],
     notification: null,
+    isLoaded: false,
+    isLoading: false,
   },
   reducers: {
     toggleCart(state) {
@@ -50,6 +52,15 @@ const cartSlice = createSlice({
         title: action.payload.title,
         message: action.payload.message,
       };
+    },
+    loadingCart: (state) => {
+      state.isLoaded = false;
+      state.isLoading = true;
+    },
+    loadCartData: (state, action) => {
+      state.isLoaded = true;
+      state.isLoading = false;
+      state.items = action.payload.items || [];
     },
   },
 });
